@@ -1,19 +1,17 @@
 
 function Languages(){
 
-    const languages1 = "English";
-    const languages2 = "German";
-    const languages3 = "French";
+    const languages = ["English", "German", "Swedish"];
 
     return(
         <div>
             <ul>
-                <li>{languages1}</li>
-                <li>{languages2}</li>
-                <li>{languages3}</li>
+                {languages.map((language) => (
+                    <li key={language}>{language}</li>
+                ))}
             </ul>
             <hr></hr>
         </div>
     );
 }
-export default Languages
+export default Languages;

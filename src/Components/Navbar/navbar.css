@@ -1,0 +1,118 @@
+.navbar {
+  width: 100%;
+  background: var(--white);
+  color: var(--gray-900);
+  padding: var(--spacing-4) 0;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  z-index: var(--z-fixed);
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.nav-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity var(--transition-normal);
+}
+
+.nav-brand:hover {
+  opacity: 0.8;
+}
+
+.nav-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: var(--spacing-3);
+}
+
+.nav-title {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: var(--spacing-6);
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: var(--gray-700);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+  background: var(--gray-50);
+}
+
+.nav-item.active .nav-link {
+  color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.user-name {
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 var(--spacing-4);
+  }
+  
+  .nav-menu {
+    gap: var(--spacing-3);
+  }
+  
+  .nav-title {
+    font-size: var(--font-size-lg);
+  }
+  
+  .user-menu {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+  
+  .user-name {
+    display: none;
+  }
+}
