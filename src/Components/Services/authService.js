@@ -8,7 +8,7 @@ export const login = async ({ email }) => {
     currentUser ={
         id: 1,
         email,
-        name: emil.split('@')[0],
+        name: email.split('@')[0],
         createAt: new Date().toISOString(),
     };
     return currentUser;
