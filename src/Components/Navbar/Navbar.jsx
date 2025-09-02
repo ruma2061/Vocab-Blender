@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { logout } from '../../store/slices/authSlice';
+import { logout  as authLogout }   from '../Services/authService';
 import './navbar.css';
 
 const Navbar = () => {
@@ -12,8 +12,8 @@ const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('isAuthenticated');
+    authLogout();
+
     dispatch(logout());
     navigate('/login');
   };

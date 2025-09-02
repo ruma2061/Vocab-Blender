@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentLanguage, setCurrentCategory, setLearningMode } from '../../store/slices/vocabularySlice';
 import { logout } from '../../store/slices/authSlice';
+import { logout as authLogout } from '../Services/authService';
 import './dashboard.css';
 
 const Dashboard = () => {
@@ -10,7 +11,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   
   const { user } = useSelector((state) => state.auth);
-  const { currentLanguage, vocabulary } = useSelector((state) => state.vocabulary);
+  const { vocabulary } = useSelector((state) => state.vocabulary);
   const { progress, totalScore, streak, achievements } = useSelector((state) => state.progress);
 
   const languages = Object.keys(vocabulary);
@@ -28,8 +29,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('isAuthenticated');
+    authLogout();
     dispatch(logout());
     navigate('/login');
   };

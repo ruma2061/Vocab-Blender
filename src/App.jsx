@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { store } from './store/store';
 import { loginSuccess } from './store/slices/authSlice';
 import { loadProgress } from './store/slices/progressSlice';
+import { getCurrentUser } from './Components/Services/authService.js';
 
 // Components
 import Navbar from './Components/Navbar/Navbar.jsx';
@@ -24,20 +25,18 @@ import './styles/design-system.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 // App Component
 const AppContent = () => {
   useEffect(() => {
-    // Check for existing user session
-    const user = localStorage.getItem('user');
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    const user = getCurrentUser();
     const savedProgress = localStorage.getItem('progress');
-    
-    if (user && isAuthenticated) {
-      store.dispatch(loginSuccess(JSON.parse(user)));
+
+    if (user && authIsAuthenticated()){
+      store.dispatch(loginSuccess(user));
     }
     
     if (savedProgress) {

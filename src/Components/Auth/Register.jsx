@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginStart, loginSuccess, loginFailure } from '../../store/slices/authSlice';
+import { register as authRegister } from '../Services/authService';
 import './auth.css';
 
 const Register = () => {
@@ -73,23 +74,11 @@ const Register = () => {
     
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, create a new user
-      const user = {
-        id: Date.now(),
-        name: formData.name,
-        email: formData.email,
-        createdAt: new Date().toISOString(),
-      };
-      
-      // Save to localStorage
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('isAuthenticated', 'true');
+      const user = await authRegister(formData);
       
       dispatch(loginSuccess(user));
       navigate('/dashboard');
-    } catch (error) {
+    } catch {
       dispatch(loginFailure('Registration failed. Please try again.'));
     }
   };

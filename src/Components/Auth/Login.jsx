@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginStart, loginSuccess, loginFailure } from '../../store/slices/authSlice';
+import { login as authLogin } from '../Services/authService';
 import './auth.css';
 
 const Login = () => {
@@ -61,23 +62,11 @@ const Login = () => {
     
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, accept any valid email/password
-      const user = {
-        id: 1,
-        email: formData.email,
-        name: formData.email.split('@')[0],
-        createdAt: new Date().toISOString(),
-      };
-      
-      // Save to localStorage
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('isAuthenticated', 'true');
-      
+      const user = await authLogin(formData);
+
       dispatch(loginSuccess(user));
       navigate('/dashboard');
-    } catch (error) {
+    } catch {
       dispatch(loginFailure('Login failed. Please try again.'));
     }
   };

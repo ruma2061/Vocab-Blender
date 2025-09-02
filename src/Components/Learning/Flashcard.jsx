@@ -10,7 +10,6 @@ const Flashcard = () => {
   
   const dispatch = useDispatch();
   const { vocabulary, currentLanguage, currentCategory, currentWordIndex } = useSelector((state) => state.vocabulary);
-  const { user } = useSelector((state) => state.auth);
 
   const currentWords = vocabulary[currentLanguage].filter(
     word => word.category === currentCategory
