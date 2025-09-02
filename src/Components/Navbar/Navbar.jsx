@@ -2,7 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { logout  as authLogout }   from '../Services/authService';
+import {logout} from '../../store/slices/authSlice';
 import './navbar.css';
+import LanguageSelector from './LanguageSelector';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -31,6 +33,9 @@ const Navbar = () => {
         </div>
         
         <ul className='nav-menu'>
+          <li className='nav-item'>
+            Select Language: <LanguageSelector />
+          </li>
           {isAuthenticated ? (
             <>
               <li className={`nav-item ${isActive('/dashboard') ? 'active' : ''}`}>

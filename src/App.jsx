@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useSelector, useDispatch } from 'react-redux';
 import { store } from './store/store';
 import { loginSuccess } from './store/slices/authSlice';
 import { loadProgress } from './store/slices/progressSlice';
-import { getCurrentUser } from './Components/Services/authService.js';
+import { getCurrentUser, isAuthenticated as authIsAuthenticated } from './Components/Services/authService.js';
+import { setLanguage } from './store/slices/languageSlice.js';
 
 // Components
 import Navbar from './Components/Navbar/Navbar.jsx';
@@ -22,6 +23,7 @@ import Contact from './Components/Contact/Contact.jsx';
 
 // Styles
 import './styles/design-system.css';
+import { current } from '@reduxjs/toolkit';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -31,9 +33,14 @@ const ProtectedRoute = ({ children }) => {
 
 // App Component
 const AppContent = () => {
+  
+  const dispatch = useDispatch();
+  const currentLanguage = useSelector((state) => state.language.selected);
+  
   useEffect(() => {
     const user = getCurrentUser();
     const savedProgress = localStorage.getItem('progress');
+    const savedLanguage = localStorage.getItem('language');
 
     if (user && authIsAuthenticated()){
       store.dispatch(loginSuccess(user));
@@ -42,7 +49,16 @@ const AppContent = () => {
     if (savedProgress) {
       store.dispatch(loadProgress(JSON.parse(savedProgress)));
     }
-  }, []);
+
+    if (savedLanguage) {
+      dispatch(setLanguage(savedLanguage));
+    }
+  }, [dispatch]);
+
+  useEffect(() =>{
+    document.documentElement.lang = currentLanguage;
+    localStorage.setItem('language', currentLanguage);
+  }, [currentLanguage]);
 
   return (
     <Router>
