@@ -12,12 +12,12 @@
 }
 
 .nav-container {
-  max-width: var(--container-max-width);
-  margin: var(--spacing-3);
+  max-width: 100%;
+  margin: 0;
   padding: 0 var(--spacing-6);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--spacing-6);
 }
 
 .nav-brand {
@@ -50,11 +50,16 @@
   gap: var(--spacing-6);
   margin: 0;
   padding: 0;
+  flex: 1;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
+}
+
+.nav-right {
+  margin-left: auto;
 }
 
 .nav-link {

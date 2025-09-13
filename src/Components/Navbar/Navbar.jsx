@@ -53,7 +53,7 @@ const Navbar = () => {
                   Progress
                 </button>
               </li>
-              <li className='nav-item'>
+              <li className='nav-item nav-right'>
                 <div className='user-menu'>
                   <span className='user-name'>Hi, {user?.name}</span>
                   <button onClick={handleLogout} className='btn btn-secondary'>
@@ -74,7 +74,7 @@ const Navbar = () => {
                   Contact
                 </button>
               </li>
-              <li className='nav-item'>
+              <li className='nav-item nav-right'>
                 <button onClick={() => navigate('/login')} className='btn btn-primary'>
                   Sign In
                 </button>
