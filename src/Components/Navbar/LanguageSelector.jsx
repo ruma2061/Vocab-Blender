@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../store/slices/languageSlice';
 
@@ -19,22 +19,34 @@ const LanguageSelector = () => {
   const [displayName, setDisplayName] = useState(LANGUAGES[0].name);
   const intervalRef = useRef(null);
   const indexRef = useRef(0);
+  const [flipping, setFlipping] = useState(false);
 
-  const startCycle = () => {
+  const animateFlip = useCallback((nextIndex) => {
+    setFlipping(true);
+    setTimeout(() => {
+      setDisplayName(LANGUAGES[nextIndex].name);
+    }, 300);
+    setTimeout(() => {
+      setFlipping(false);
+    }, 600);
+  }, []);
+
+  const startCycle = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       indexRef.current = (indexRef.current + 1) % LANGUAGES.length;
-      setDisplayName(LANGUAGES[indexRef.current].name);
+      animateFlip(indexRef.current);
     }, 2000);
-  };
+  }, [animateFlip]);
 
   useEffect(() => {
     startCycle();
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [startCycle]);
 
   const handleMouseEnter = () => {
     clearInterval(intervalRef.current);
+    setFlipping(false);
     const current = LANGUAGES.find((l) => l.code === selected);
     setDisplayName(current.name);
   };
@@ -63,7 +75,7 @@ const LanguageSelector = () => {
       onMouseLeave={handleMouseLeave}
     >
       <button className="language-button" onClick={handleToggle}>
-        {displayName}
+        <span className={`language-label${flipping ? ' flip' : ''}`}>{displayName}</span>
       </button>
       {open && (
         <ul className="language-dropdown">
